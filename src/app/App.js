@@ -1,16 +1,25 @@
 import { Canvas } from '@react-three/fiber';
-import Bowlpin from '../components/bowlpin/bowlpin';
+import { Suspense } from 'react';
+import Bowlpin from '../components/geometries/bowlpin/bowlpin';
+import DirectionalLightComp from '../components/lights/DirectionalLight';
 import GizmoHelperComp from '../helpers/dev/GizmoHelper';
 import './App.css';
 
 export default function App() {
-    return(
-        <Canvas>
-            <GizmoHelperComp/>
-            <Bowlpin/>
-            <gridHelper/>
-            <ambientLight intensity={0.1} />
-            <directionalLight args={['#aaaaaa']} position={[10, 10, 10]} castShadow="true" />
-        </Canvas>
-    )
+  return (
+    <Canvas>
+      <GizmoHelperComp />
+
+      <ambientLight />
+      <DirectionalLightComp showHelper={true}/>
+
+      <gridHelper />
+
+      <Suspense fallback={null}>
+        <Bowlpin />
+      </Suspense>
+
+      <color attach='background' args={['black']} />
+    </Canvas>
+  );
 }
